@@ -59,7 +59,7 @@ export const getAlbums = () => {
                 ({ track }: { track: any }) => {
                   console.log(track);
                   return {
-                    href: track.album.external_urls.spotify,
+                    link: track.album.external_urls.spotify,
                     name: track.album.name,
                     release_date: track.album.release_date,
                     image: track.album.images[1].url,
