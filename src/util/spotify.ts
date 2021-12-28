@@ -57,7 +57,6 @@ export const getAlbums = () => {
               const { items } = albumRes.data;
               const albums: AlbumType[] = items.map(
                 ({ track }: { track: any }) => {
-                  console.log(track);
                   return {
                     link: track.album.external_urls.spotify,
                     name: track.album.name,
