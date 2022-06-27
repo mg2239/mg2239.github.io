@@ -15,7 +15,7 @@ const Link = ({ to, children }: React.PropsWithChildren<{ to: string }>) => {
 
 const Links = () => {
   return (
-    <div className="mb-4 font-semibold">
+    <div className="mb-2 font-semibold">
       <Link to="https://drive.google.com/file/u/1/d/1C0ey-CJc0IcWVugmebR6NFBLsfhdX9ZH/view?usp=sharing">
         resume
       </Link>
@@ -53,7 +53,7 @@ const Intro = () => {
           />
         </div>
         <div className="col-span-5 sm:col-span-2">
-          <h1 className="mb-1 font-light">matthew guo</h1>
+          <h1 className="mb-1 sm:mb-2 font-light">matthew guo</h1>
           <Links />
           {!isSmall && <Text />}
         </div>
