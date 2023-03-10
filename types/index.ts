@@ -6,8 +6,8 @@ export type Album = {
 };
 
 export type Song = {
-  title: string;
-  link: string;
+  title?: string;
+  link?: string;
   is_playing: boolean;
-  progress: string;
+  progress?: string;
 };

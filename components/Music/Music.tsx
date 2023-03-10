@@ -1,7 +1,7 @@
-import React from 'react';
-import Image from 'next/image';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
+import Image from 'next/image';
+import React from 'react';
 import { Album } from '../../types';
 
 dayjs.extend(localizedFormat);

@@ -5,10 +5,6 @@ import { Album, Song } from '../types';
 const client_id = process.env.CLIENT_ID!;
 const client_secret = process.env.CLIENT_SECRET!;
 
-type AlbumPayload = {
-  albums: Album[];
-};
-
 export const getAlbums = () => {
   const headers = {
     headers: {
@@ -25,13 +21,13 @@ export const getAlbums = () => {
     grant_type: 'client_credentials',
   };
 
-  return new Promise<AlbumPayload>(async (resolve, reject) => {
+  return new Promise<Album[]>(async (resolve, reject) => {
     if (client_id && client_secret) {
       try {
         const tokenRes = await axios.post(
           'https://accounts.spotify.com/api/token',
           queryString.stringify(data),
-          headers,
+          headers
         );
         const { access_token } = tokenRes.data;
         const auth = {
@@ -47,7 +43,7 @@ export const getAlbums = () => {
               // fields: 'items(track(album))',
             },
           }),
-          auth,
+          auth
         );
         const { items } = albumRes.data;
         const albums: Album[] = items.map(({ track }: { track: any }) => {
@@ -59,7 +55,7 @@ export const getAlbums = () => {
           };
         });
         albums.reverse();
-        resolve({ albums });
+        resolve(albums);
       } catch (err) {
         reject({ err });
       }
@@ -93,7 +89,7 @@ export const getCurrentlyListening = async () => {
       const tokenRes = await axios.post(
         'https://accounts.spotify.com/api/token',
         queryString.stringify(data),
-        headers,
+        headers
       );
       const { access_token } = tokenRes.data;
       const playingRes = await axios.get(
@@ -102,7 +98,7 @@ export const getCurrentlyListening = async () => {
           headers: {
             Authorization: `Bearer ${access_token}`,
           },
-        },
+        }
       );
       if (playingRes.data) {
         const { is_playing, progress_ms } = playingRes.data;
