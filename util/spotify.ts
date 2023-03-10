@@ -61,7 +61,7 @@ export const getAlbums = () => {
         albums.reverse();
         resolve({ albums });
       } catch (err) {
-        console.log(err);
+        reject({ err });
       }
     } else {
       reject({ err: 'No env variables' });
@@ -105,10 +105,11 @@ export const getCurrentlyListening = async () => {
         },
       );
       if (playingRes.data) {
-        const { is_playing } = playingRes.data;
+        const { is_playing, progress_ms } = playingRes.data;
         const {
           artists,
           name,
+          duration_ms,
           external_urls: { spotify },
         } = playingRes.data.item;
         const artist = artists[0].name;
@@ -116,15 +117,13 @@ export const getCurrentlyListening = async () => {
           title: `${artist} - ${name}`.toLowerCase(),
           link: spotify,
           is_playing,
+          progress: (progress_ms / duration_ms).toPrecision(2),
         });
       } else {
-        console.log(playingRes);
-        console.log('playingRes has no data');
         reject({ is_playing: false });
       }
-    } catch (err: any) {
-      console.log(err);
-      reject({ is_playing: false });
+    } catch (err) {
+      reject({ err });
     }
   });
 };

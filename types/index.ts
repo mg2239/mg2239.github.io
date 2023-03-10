@@ -9,4 +9,5 @@ export type Song = {
   title: string;
   link: string;
   is_playing: boolean;
+  progress: string;
 };

@@ -1,19 +1,12 @@
 import React from 'react';
-import LinesEllipsis from 'react-lines-ellipsis';
-import responsiveHOC from 'react-lines-ellipsis/lib/responsiveHOC';
 import Image from 'next/image';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { Album } from '../../types';
-import { useWindowWidth } from '../../context/useWindowWidth';
 
 dayjs.extend(localizedFormat);
 
-const ResponsiveEllipsis = responsiveHOC()(LinesEllipsis);
-
 const Album = ({ link, name, image, release_date }: Album) => {
-  const { isSmall } = useWindowWidth();
-
   return (
     <div className="m-auto">
       <a href={link} className="group flex">
@@ -26,17 +19,10 @@ const Album = ({ link, name, image, release_date }: Album) => {
           className="block group-hover:opacity-50 transition-opacity"
         />
       </a>
-      {!isSmall && (
-        <>
-          <ResponsiveEllipsis
-            text={name}
-            basedOn="letters"
-            maxLine={1}
-            className="mt-1 font-semibold"
-          />
-          <p className="text-xs">{dayjs(release_date).format('ll')}</p>
-        </>
-      )}
+      <div className="hidden sm:block">
+        <p className="mt-1 font-semibold">{name}</p>
+        <p className="text-xs">{dayjs(release_date).format('ll')}</p>
+      </div>
     </div>
   );
 };
