@@ -40,17 +40,16 @@ export const getAlbums = () => {
             url: 'https://api.spotify.com/v1/playlists/0lCLH7IqNSpnGhdzQF3JmP/tracks',
             query: {
               limit: 50,
-              // fields: 'items(track(album))',
             },
           }),
           auth
         );
-        const { items } = albumRes.data;
-        const albums: Album[] = items.map(({ track }: { track: any }) => {
+        const { items }: { items: any[] } = albumRes.data;
+        const albums: Album[] = items.map(({ track }) => {
           return {
             link: track.album.external_urls.spotify,
             name: track.album.name,
-            release_date: track.album.release_date,
+            releaseDate: track.album.release_date,
             image: track.album.images[1].url,
           };
         });
@@ -101,19 +100,17 @@ export const getCurrentlyListening = async () => {
         }
       );
       if (playingRes.data) {
-        const { is_playing, progress_ms } = playingRes.data;
+        const { is_playing } = playingRes.data;
         const {
           artists,
           name,
-          duration_ms,
           external_urls: { spotify },
         } = playingRes.data.item;
         const artist = artists[0].name;
         resolve({
           title: `${artist} - ${name}`.toLowerCase(),
           link: spotify,
-          is_playing,
-          progress: (progress_ms / duration_ms).toPrecision(2),
+          isPlaying: is_playing,
         });
       } else {
         reject({ is_playing: false });

@@ -4,13 +4,12 @@ import Intro from '../components/Intro/Intro';
 import Music from '../components/Music/Music';
 import { Album, Song } from '../types';
 import { getAlbums, getCurrentlyListening } from '../util/spotify';
-import { trycatch } from '../util/trycatch';
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const albums = await trycatch(getAlbums, []);
-  const song = await trycatch(getCurrentlyListening, {
-    is_playing: false,
-  });
+  const albums = await getAlbums().catch(() => []);
+  const song = await getCurrentlyListening().catch(() => ({
+    isPlaying: false,
+  }));
   return { props: { albums, song } };
 };
 

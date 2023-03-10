@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useIsMobile } from '../../hooks/useIsMobile';
@@ -19,11 +20,8 @@ const Text = (props: { song: Song }) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      fetch('/api/currentlyListening')
-        .then((data) => data.json())
-        .then((song) => setSong(song));
+      axios.get('/api/currentlyListening').then(({ data }) => setSong(data));
     }, 5000);
-
     return () => clearInterval(interval);
   }, []);
 
@@ -32,7 +30,7 @@ const Text = (props: { song: Song }) => {
       <p>web dev and music producer</p>
       <p>swe @ cameo</p>
       <p>cs @ cornell &apos;22</p>
-      {song?.is_playing && (
+      {song.isPlaying && (
         <p>
           currently listening to <Link to={song.link}>{song.title}</Link>
         </p>

@@ -6,7 +6,7 @@ import { Album } from '../../types';
 
 dayjs.extend(localizedFormat);
 
-const Album = ({ link, name, image, release_date }: Album) => {
+const Album = ({ link, name, image, releaseDate }: Album) => {
   return (
     <div className="m-auto">
       <a href={link} className="group flex">
@@ -21,7 +21,7 @@ const Album = ({ link, name, image, release_date }: Album) => {
       </a>
       <div className="hidden sm:block">
         <p className="mt-1 font-semibold">{name}</p>
-        <p className="text-xs">{dayjs(release_date).format('ll')}</p>
+        <p className="text-xs">{dayjs(releaseDate).format('ll')}</p>
       </div>
     </div>
   );
